@@ -1,0 +1,58 @@
+//Redis Commands
+
+redis-cli                                   --for redis client
+redis-cli -h host -p port -a password
+
+SET key value                               --to set keyname with value
+
+GET key                                     --to get the value for keynamme
+
+KEYS *                                      --to get the all keys
+
+DEL key                                     --to delete particular key
+
+FLUSHALL                                    --to delete all keys
+
+TTL key                                     --to get the remaining time in key expiry
+
+EXISTS key                                  --to check whether key exists or not
+
+EXPIRE key time                             --to set the expiry of key after specified time
+
+SETEX key time value                        --to set key and expiry of key after specified time
+
+//Arrays
+
+LPUSH key value                           --pushes an value into array from head
+
+RPUSH key value                           --pushes an value into array from tail
+          
+LPOP key                                  --removes and gets the first element from array
+
+RPOP key                                  --removes and gets the last element from array     
+
+LRANGE key start stop                     --gets the range of elements from an array
+
+//Sets or arrays without repeating element
+
+SADD key value                            --adds element to set
+
+SMEMBERS key                              --gets all members from set
+
+//Objects or Hash
+
+HSET key field value                      --sets the string value of a hash field
+
+HGET key field                            --gets the value of a hash field stored at the specified key
+
+HGETALL key                               --gets all the fields and values stored in a hash at the specified key
+
+HDEL key field                            --deletes hash field
+
+HEXISTS key field                         --checks whether hash field exists or not
+
+
+
+
+
+
