@@ -1,0 +1,26 @@
+//Postgress Commands -- postgress Commands are case sensitive
+
+psql -U postgress                   --to get into postgress
+
+CREATE USER devnest WITH PASSWORD 'password';               --to create user with password
+
+CREATE DATABASE devsDB;                                     --to create database
+
+GRANT ALL PRIVILEGES ON DATABASE devsDB to devnest;         --to give permission for database to devsnest
+
+DROP DATABASE IF EXISTS devsDB;                             --checks whether database is present, if present deletes
+                 
+\l;                                                         --gives all the data of all databases present
+
+\c devsDB;                                                  --to connect to database
+
+\d COMPANY                                                  --to check database in tabular form
+
+CREATE TABLE COMPANY(                                       --creating table with attributes
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);     
+
