@@ -1,100 +1,93 @@
-//Redis Commands
+--application of redis- live chat application
 
-redis-cli                                   --for redis client
-redis-cli -h host -p port -a password
+COMMAND PROMT A:
 
-SET key value                               --to set keyname with value
+Subscriber:
 
-GET key                                     --to get the value for keynamme
-
-KEYS *                                      --to get the all keys
-
-DEL key                                     --to delete particular key
-
-FLUSHALL                                    --to delete all keys
-
-TTL key                                     --to get the remaining time in key expiry
-
-EXISTS key                                  --to check whether key exists or not
-
-EXPIRE key time                             --to set the expiry of key after specified time
-
-SETEX key time value                        --to set key and expiry of key after specified time
-
-//Arrays
-
-LPUSH key value                           --pushes an value into array from head
-
-RPUSH key value                           --pushes an value into array from tail
-          
-LPOP key                                  --removes and gets the first element from array
-
-RPOP key                                  --removes and gets the last element from array     
-
-LRANGE key start stop                     --gets the range of elements from an array
-
-//Sets or arrays without repeating element
-
-SADD key value                            --adds element to set
-
-SMEMBERS key                              --gets all members from set
-
-//Objects or Hash
-
-HSET key field value                      --sets the string value of a hash field
-
-HGET key field                            --gets the value of a hash field stored at the specified key
-
-HGETALL key                               --gets all the fields and values stored in a hash at the specified key
-
-HDEL key field                            --deletes hash field
-
-HEXISTS key field                         --checks whether hash field exists or not
-
-//PUB/SUB 
-
-PUBLISH channel-name message  
-
-SUBSCRIBE channel-name  
-
-PSUBSCRIBE <pattern_to_match_channels> (provides pattern matching) 
-
-UNSUBSCRIBE channel-name  
-
-PUNSUBSCRIBE <pattern_to_match_channel>  
-
-//STREAMS
-
--Streams are used to store a set of key value pairs in a pipeline which are identified via the entry key.If entry key is not given explicitly by the user i.e the user writes * instead of the entry key then redis generates the key using the current timestamp in milliseconds.
-
-XADD stream-name entry-key key1 value1 key2 value2 ... and so on
-Example: XADD checkin 1000 name gayathri location tirupur  --> here 1000 is the entry key given by user
-
-XRANGE stream-name start_entry_key end_entry_key --> returns entries in the given range in oldest entry first order
-
-XRANGE stream-name start end COUNT num --> limit the output to num entries
-
-XREVRANGE stream-name end start --> return output in reverse order i.e newest entries first
-
-XRANGE stream-name - + COUNT num --> top num oldest entries first
-
-XREAD STREAMS stream-name start --> to return all entries greater than start
-
-XREAD COUNT num STREAMS stream-name start --> return num entries from the stream after entry-key = start.
-
-XREAD COUNT num BLOCK x STREAMS stream-name entry-key
-num is number of entries I want to consume
-x is how long to block(in milliseconds) in case the stream doesn't yet contain any entries newer(higher in number) than the one whose entry-key I have supplied.
-
-XREAD BLOCK x STREAMS stream-name $ --> waits for x milliseconds to recieve any entry.
-
-XTRIM stream-name MAXLEN num --> trims/removes oldest num entries from the stream.
-
-XADD stream-name MAXLEN num * key1 val1 key2 val2 --> limits the number of max num of entries in the stream to num.
-
-XLEN stream-name --> returns length of stream.
+SUBCRIBE <channel_name>
+SUBSCRIBE  devsnest
 
 
+COMMAND PROMT B:
+
+publisher:
+
+PUBLISH <channel_name> <message>
+PUBLISH  devsnest  welcome
 
 
+COMMAND PROMT A:
+
+Subscriber:
+
+(1) "message"
+(2) "devsnest"
+(3) "welcome"
+
+
+/////////--------------------MULTIPLE SUBCRIPTION ----------------------------///////
+
+PSUBSCRIBE d*                  //---- (SUBCRIBE TO EVERY PUBLISHERS STARTING WITH d) -----///
+UNSUBCRIBE devsnest            //----- UNSUBCRIBE FROM CHANNEL ----------//
+PUNSUBSCRIBE d*
+
+
+/////----------------------------REDIS STREAMS----------------------------/////
+
+XADD <stream_name> <id> <key_value>      //------LIKE DATABASE ROWS----------//
+XADD mystream 10000 name Ankit           //------SAVING Anna STREAM IN mystream AT ID 10000----//
+XADD mystream 10001 name Boy
+XADD mystream 10002 name Cathy
+
+XADD mystream * name Cathy    //------HERE ID IS BASED ON THE TIME STAMP----//
+XADD mystream * name Cathy
+
+
+//--------------------------------LIMITING THE ENTRIES------------------------------// 
+
+XADD mystream MAXLEN 10000 * name Bingo
+
+
+//---------------------- to READ values FROM THE STREAM FROM ZERO TO 200 ID --------------//
+
+XREAD COUNT 200 STREAMS mystream 0
+XREAD COUNT 200 STREAMS mystream 10002-0
+
+
+//-----------WAIT TILL 10000 MILLI SECONDS AND CLOSE IT AFTER 10000 MILLI SEC i.e. 10 SECS-------//
+
+XREAD BLOCK 10000 STREAMS mystream 0
+XREAD BLOCK 0 STREAMS mystream 0 //ALL THE DATA WITHOUT DISCONNECTION
+XREAD BLOCK 10000 STREAMS mystream 10002-0 //DATA AFTER THE ID 10002-0
+
+
+//----------------MAX CONNECT TO 10 SECS TO SUBCRIBE------------------//
+
+Term 1: SUBSCRIBE
+XREAD BLOCK 10000 STREAMS mystream $
+
+Term 2: PUBLISH
+XADD mystream * name devsnest
+
+
+//-------------------------LOOPING THROUGH STREAM IDs-------------------------//
+
+XRANGE mystream START END
+XRANGE mystream 10001-0 1630334456611-0
+
+
+//----------------ALSO COUNT ONLY 3 ROWS BETWEEN START AND END---------//
+
+XRANGE mystream START END COUNT 3
+XRANGE mystream 10001-0 1630334456611-0 COUNT 3
+
+
+//---------------WHEN WE DONT KNOW THE START AND END ID-----------------//
+
+XRANGE mystream - + COUNT 2
+
+
+//---------------------READ IN REVERSE ORDER---------------------------//
+
+XREVRANGE mystream + - COUNT 2s
 

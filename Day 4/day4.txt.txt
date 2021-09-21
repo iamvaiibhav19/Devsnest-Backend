@@ -1,0 +1,7 @@
+-Read about 'how does internet works'.
+-Finding alternatives of REST API's. 
+	-GraphQL APIs
+	-Falcor APIs
+	-gRPC APIs
+	-Pure JSON APIs
+	-OData APIs
