@@ -1,0 +1,32 @@
+var fs = require ("fs");
+
+fs.mkdirSync('<Foldername>'); ----Make Folder
+
+.exit -- end programme
+
+mkdir <folder name> -- create folder async
+
+fs.writefileSync("folder/filename.ext","<content>",(err)=>{ ---------- create File With Content
+... if(err){
+.....console.log(err);
+.....}
+...});
+  
+
+fs.appendFileSync("FieNameWithDir","<to append>"); --append data
+
+fs.readFleSync("fileNameithDir"); --readFile (Return Buffer)
+
+fs.readFleSync("fileNameithDir","utf-8");  (returns file content)
+
+
+fs.renameSync("<FileToRename with DIR>","Rename To With DIR"); ---rename File
+
+fs.unlinkSync("FileName with path"); -deleteFile
+
+fs.rmdirSync("FolderName"); -Delete Folder
+
+
+
+
+node index.js -- runs content in the file

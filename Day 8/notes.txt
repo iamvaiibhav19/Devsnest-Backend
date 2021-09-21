@@ -1,0 +1,4 @@
+npm init -----to create package.json
+npm install --save express
+npm install --savedev nodemon -- used to keep server live and restart on changes {savedev- save for devlopment purpose}
+create index.js
