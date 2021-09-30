@@ -1,0 +1,14 @@
+
+//Waterfall methodoloy
+
+-Completing the whole product/ project then making it available to customer/users.
+
+//Agile methodoloy
+
+-Creating project, reviewing it, fixing bugs, taking customer review, all is taken care in form of sprints at the time of project developement itself.
+
+-Benefits:
+	Indivisuals & Interactions
+	Working software
+	Customer collaboration
+	Responding to change

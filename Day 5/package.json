@@ -1,0 +1,14 @@
+{
+  "name": "day-5",
+  "version": "1.0.0",
+  "description": "commandline CRUD operations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vaibhav",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^8.2.0"
+  }
+}
